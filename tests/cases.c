@@ -47,7 +47,7 @@ static int compare_arrays(const StatData *a, const StatData *b, size_t len)
 
 int test_save_load_case_1(void)
 {
-    const char *path = "tmp_case1.bin";
+    const char *path = "tests/tmp_case1.bin";
 
     int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd < 0) {
@@ -98,12 +98,13 @@ int test_save_load_case_1(void)
     }
 
     free(loaded);
+    unlink(path);
     return ok;
 }
 
 int test_save_load_case_2(void)
 {
-    const char *path = "tmp_case2_empty.bin";
+    const char *path = "tests/tmp_case2_empty.bin";
 
     const StatData empty_arr[1] = { 0 };
 
@@ -146,6 +147,7 @@ int test_save_load_case_2(void)
     }
 
     free(loaded);
+    unlink(path);
     return ok;
 }
 
