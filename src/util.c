@@ -1,6 +1,3 @@
-#include <stdio.h>
-
-#include "statdata.h"
 #include "util.h"
 
 

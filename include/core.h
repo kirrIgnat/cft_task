@@ -2,6 +2,7 @@
 #define CORE_H
 
 #include <stddef.h> 
+#include <stdlib.h>
 #include "statdata.h"
 
 StatError JoinDump(const StatData *first, size_t len_first, 

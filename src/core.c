@@ -1,5 +1,5 @@
-#include "statdata.h"
-#include <stdlib.h>
+#include "core.h"
+
 
 /*
  * core.c 
