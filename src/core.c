@@ -62,8 +62,57 @@ static void statdata_quicksort(StatData *arr, long lo, long hi)
     }
 }
 
-StatError JoinDump(const StatData *first, size_t len_first, const StatData *second, size_t len_second, StatData **result, size_t *len_result){
+static void merge_or_add(StatData *result, size_t *len_result, const StatData *src)
+{
+    for (size_t i = 0; i < *len_result; i++) {
+        if (result[i].id == src->id) {
+            result[i].count += src->count;
+            result[i].cost  += src->cost;
+            if (src->primary == 0)
+                result[i].primary = 0;
+            if (src->mode > result[i].mode)
+                result[i].mode = src->mode;
+            return;
+        }
+    }
+    result[*len_result] = *src;
+    (*len_result)++;
+}
 
+
+StatError JoinDump(const StatData *first,  size_t len_first,
+                   const StatData *second, size_t len_second,
+                   StatData **result,      size_t *len_result)
+{
+    if (result == NULL || len_result == NULL)
+        return STAT_ERR_INVALID_ARG;
+
+    if ((first == NULL && len_first > 0) ||
+        (second == NULL && len_second > 0))
+        return STAT_ERR_INVALID_ARG;
+
+    size_t total_len = len_first + len_second;
+    if (total_len == 0) {
+        *result = NULL;
+        *len_result = 0;
+        return STAT_OK;
+    }
+
+    StatData *out = malloc(total_len * sizeof(StatData));
+    if (out == NULL)
+        return STAT_ERR_ALLOC;
+
+    size_t out_len = 0;
+
+    for (size_t i = 0; i < len_first; i++)
+        merge_or_add(out, &out_len, &first[i]);
+
+    for (size_t i = 0; i < len_second; i++)
+        merge_or_add(out, &out_len, &second[i]);
+
+    *result = out;
+    *len_result = out_len;
+    return STAT_OK;
 }
 
 StatError SortDump(StatData *data, size_t len_data) {
@@ -71,6 +120,6 @@ StatError SortDump(StatData *data, size_t len_data) {
         return STAT_ERR_INVALID_ARG;
 
     statdata_quicksort(data, 0, (long)len_data - 1);
-
+    return STAT_OK;
 }
 

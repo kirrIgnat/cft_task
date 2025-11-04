@@ -18,16 +18,30 @@
 static void print_error() {}
 
 int main(int argc, char **argv) {
-    StatData arr[3] = {
-        { .id = 2, .count = 1, .cost = 10.0f, .primary = 1, .mode = 0 },
-        { .id = 3, .count = 1, .cost =  5.0f, .primary = 1, .mode = 0 },
-        { .id = 1, .count = 1, .cost =  5.0f, .primary = 1, .mode = 0 },
+    const StatData in_a[2] = {
+        { .id = 1, .count = 13,  .cost = 3.567f,   .primary = 0, .mode = 3 },
+        { .id = 2, .count = 1,   .cost = 88.90f,   .primary = 1, .mode = 4 }
     };
 
-    SortDump(arr, 3);
+    const StatData in_b[2] = {
+        { .id = 23, .count = 13,   .cost = 0.011f,   .primary = 0, .mode = 2 },
+        { .id = 2, .count = 1000, .cost = 1.00003f, .primary = 1, .mode = 2 }
+    };
 
+    StatData *joined = NULL;
+    size_t len_joined = 0;
 
-    PrintTable(arr,3);
+    StatError err = JoinDump(in_a, 2, in_b, 2, &joined, &len_joined);
+    if (err != STAT_OK) {
+        fprintf(stderr, "JoinDump failed: code %d\n", (int)err);
+        return 1;
+    }
+
+    printf("JoinDump() result — уникальные id после объединения:\n");
+    SortDump(joined, len_joined);
+    PrintTable(joined, len_joined);
+
+    free(joined);
     return 0;
 
     /*
