@@ -11,4 +11,9 @@
 #include <stddef.h>
 
 
+extern const StatData case_1_in_a[2];
+extern const StatData case_1_in_b[2];
+
+extern const StatData case_1_out[3];
+
 #endif 

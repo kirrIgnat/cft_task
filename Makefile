@@ -1,5 +1,5 @@
 CC      = gcc
-CFLAGS  = -Wall -Wextra -std=c11 -O2 -Iinclude
+CFLAGS  = -Wall -Wextra -std=c11 -O2 -Iinclude -D_POSIX_C_SOURCE=200809L
 
 OBJS    = src/core.o src/io.o src/util.o
 
