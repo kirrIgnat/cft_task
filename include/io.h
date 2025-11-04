@@ -2,10 +2,20 @@
 #define IO_H
 
 #include <stddef.h> 
+#include <stdio.h>    
+#include <stdint.h> 
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <limits.h>
+
 #include "statdata.h"
 
-StatError LoadDump(const char *path, StatData **data_out, size_t *len_out);
 
-StatError StoreDump(const char *path, const StatData *data, size_t len);
+StatError StoreDump(int file_desc, const StatData *data, size_t len);
+
+StatError LoadDump(int file_desc, StatData **data_result, size_t *len_result);
+
+
 
 #endif

@@ -5,6 +5,7 @@
 #include "cases.h"
 #include "../include/statdata.h"
 
+
 /*
  * tests/main.c 
  * тестирование

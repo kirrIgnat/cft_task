@@ -4,7 +4,7 @@
 #include <stddef.h> 
 #include "statdata.h"
 
-void PrintTable(const StatData *data, size_t len, size_t limit);
+void PrintTable(const StatData *data, size_t len);
 
 
 #endif
