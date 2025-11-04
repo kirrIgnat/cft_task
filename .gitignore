@@ -1,0 +1,5 @@
+build/
+*.o
+task
+task_test
+.vscode/
