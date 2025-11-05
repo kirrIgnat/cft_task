@@ -116,7 +116,7 @@ StatError JoinDump(const StatData *first,  size_t len_first,
 }
 
 StatError SortDump(StatData *data, size_t len_data) {
-    if(data==NULL || len_data < 2)
+    if(data==NULL && len_data > 0)
         return STAT_ERR_INVALID_ARG;
 
     statdata_quicksort(data, 0, (long)len_data - 1);

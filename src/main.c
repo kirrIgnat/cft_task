@@ -94,15 +94,27 @@ int main(int argc, char **argv)
     }
 
     /* 4. sort */
-    SortDump(joined, len_joined);
+    
+    err = SortDump(joined, len_joined);
+    if (err != STAT_OK) {
+        print_stat_error("SortDump", err);
+        free(joined);
+        return 1;
+    }
 
     /* 5. print */
-    size_t to_print = (len_joined < 10) ? len_joined : 10;
-    if (to_print > 0) {
+    size_t to_print;
+    if (len_joined < 10)
+        to_print = len_joined;
+    else 
+        to_print = 10;
+
+
+    if (to_print > 0)
         PrintTable(joined, to_print);
-    } else {
+    else 
         printf("(no data)\n");
-    }
+    
 
     /* 6. save */
     int file_desc_out = open(path_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
